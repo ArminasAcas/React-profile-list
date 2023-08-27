@@ -1,0 +1,27 @@
+.profile-list {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 25px 0px;
+    margin-top: 50px;
+    width: 800px;
+}
+
+.profile-list__text {
+    padding: 0 50px 0 50px;
+    font-size: xx-large;
+    width: 100%;
+    display: flex;
+}
+
+.profile-list__text--60 {
+    width: 60%;
+}
+
+.profile-list__text--30 {
+    width: 30%;
+}
+
+.profile-list__text--10 {
+    width: 10%;
+}

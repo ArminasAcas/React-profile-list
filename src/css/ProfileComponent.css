@@ -6,7 +6,7 @@
     flex-direction: row;
     align-items: center;
     font-size: xx-large;
-    width: 600px;
+    width: 100%;
     word-break: break-all;
 }
 
@@ -25,13 +25,9 @@
 }
 
 .profile__section--30 {
-    display: flex;
-    align-items: center;
     width: 30%;
 }
 
 .profile__section--10 {
-    display: flex;
-    align-items: center;
     width: 10%;
 }

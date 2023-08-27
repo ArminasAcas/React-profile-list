@@ -1,11 +1,9 @@
-import Profile from "../components/ProfileComponent"
+import ProfileList from "../components/ProfileListComponent"
 
 export default function ProfilePage() {
 
   return (
-    <>
-      <Profile profileImageUrl="/images/img1.jpg"  username="Peter" profession="Doctor"  age={24} />
-    </>
+    <ProfileList></ProfileList>
   )
 }
 
