@@ -1,6 +1,7 @@
 import Profile from "../components/ProfileComponent"
 import { profiles } from "../globals/global"
 import "../css/ProfileListComponent.css"
+import Divider from "../components/DividerComponent"
 
 export default function ProfileList() {
 
@@ -16,6 +17,7 @@ export default function ProfileList() {
                     <span className="profile-list__text--30">Profession</span>
                     <span className="profile-list__text--10">Age</span>
                 </div>
+            <Divider />
             {profileList}
             </div>
         </>
