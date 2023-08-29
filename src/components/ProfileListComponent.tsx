@@ -42,7 +42,7 @@ export default function ProfileList() {
 
 
      let profileList =  sortedProfiles.map(profile => 
-        <Profile profileImageUrl={profile.imageUrl}  username={profile.username} profession={profile.profession}  age={profile.age} />
+        <Profile key={profile.id} profileImageUrl={profile.imageUrl}  username={profile.username} profession={profile.profession}  age={profile.age} />
     ) 
     
     return (
