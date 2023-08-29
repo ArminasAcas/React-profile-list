@@ -25,3 +25,20 @@
 .profile-list__text--10 {
     width: 10%;
 }
+
+.profile-list__button {
+    background-color: transparent;
+    border: none;
+    color: rgb(236, 236, 236);
+    font-size: xx-large;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: left;
+}
+
+.profile-list__button:hover {
+    cursor: pointer;
+}
+
+.profile-list__button--active {
+    color: rgb(19, 187, 19);
+}

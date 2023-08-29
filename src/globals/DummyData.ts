@@ -13,7 +13,7 @@ export let profiles = [
     },
     {
         imageUrl: "/images/img3.jpg",
-        username: "Maro",
+        username: "Aro",
         profession: "Electrician",
         age: 32,
     },
