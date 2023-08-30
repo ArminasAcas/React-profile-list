@@ -27,4 +27,18 @@ export let profiles = [
         profession: "Unemployed",
         age: 28,
     },
+    {
+        id: 4,
+        imageUrl: "/images/img5.jpg",
+        username: "Rito",
+        profession: "Unemployed",
+        age: 41,
+    },
+    {
+        id: 5,
+        imageUrl: "/images/img6.jpg",
+        username: "Sora",
+        profession: "Magician",
+        age: 23,
+    }
 ]
