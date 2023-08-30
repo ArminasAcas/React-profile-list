@@ -12,6 +12,8 @@
     font-size: xx-large;
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
+    gap: 20px 0px;
 }
 
 .profile-list__text--60 {
@@ -42,3 +44,14 @@
 .profile-list__button--active {
     color: rgb(19, 187, 19);
 }
+
+.profile-list__search {
+    width: 40%;
+    margin: 0 125px 0 0;
+}
+
+.profile-list__checkbox {
+    transform : scale(1.5);
+    margin: 0 10px 0 0;
+}
+
