@@ -2,8 +2,7 @@ import Profile from "../components/ProfileComponent"
 import Divider from "../components/DividerComponent"
 import { profiles } from "../globals/DummyData"
 import "../css/ProfileListComponent.css"
-import { useState } from 'react';
-import { useEffect } from "react";
+import { useState, ChangeEvent } from 'react';
 
 export default function ProfileList() {
 
@@ -13,8 +12,11 @@ export default function ProfileList() {
     const [activeButton, setActiveButton] = useState(-1);
     const [hideUnemployedUsers, setHideUnemployedUsers] = useState(false);
     const [sortedProfiles, setSortedProfiles] = useState(profiles);
+    const [inputValue,setInputValue] = useState("");
 
     function handleAgeClick() {
+        if (inputValue.length > 0) filterByInput(inputValue); 
+        if (hideUnemployedUsers) filterUnempoyedUsers();
         if (sortByAge === 0) setSortByAge(1);
         else setSortByAge(0);
         
@@ -23,10 +25,11 @@ export default function ProfileList() {
         else newSortedProfiles = sortedProfiles.sort((a,b) => b.age - a.age);
         setActiveButton(2);
         setSortedProfiles(newSortedProfiles);
-        if (hideUnemployedUsers) filterUnempoyedUsers();
      }
 
      function handleProfessionClick() {
+        if (inputValue.length > 0) filterByInput(inputValue);
+        if (hideUnemployedUsers) filterUnempoyedUsers();
         if (sortByProffesion === 0) setSortByProfession(1);
         else setSortByProfession(0);
 
@@ -35,10 +38,11 @@ export default function ProfileList() {
         else newSortedProfiles = sortedProfiles.sort((a, b) => a.profession.localeCompare(b.profession));
         setActiveButton(1);
         setSortedProfiles(newSortedProfiles);
-        if (hideUnemployedUsers) filterUnempoyedUsers();
      }
 
      function handleUsernameClick() {
+        if (inputValue.length > 0) filterByInput(inputValue); 
+        if (hideUnemployedUsers) filterUnempoyedUsers();
         if (sortByUsername === 0) setSortByUsername(1);
         else setSortByUsername(0);
 
@@ -47,10 +51,14 @@ export default function ProfileList() {
         else newSortedProfiles = sortedProfiles.sort((a,b) => a.username.localeCompare(b.username));
         setActiveButton(0);
         setSortedProfiles(newSortedProfiles);
-        if (hideUnemployedUsers) filterUnempoyedUsers();
      }
 
      function handleHideClick() {
+        if (!hideUnemployedUsers === true) {
+            filterUnempoyedUsers();
+        } else {
+            setSortedProfiles(profiles);
+        }
         setHideUnemployedUsers(!hideUnemployedUsers);
      }
 
@@ -61,13 +69,23 @@ export default function ProfileList() {
         setSortedProfiles(newSortedPrifles);
      }
 
-     useEffect(() => {
-        if (hideUnemployedUsers) {
-            filterUnempoyedUsers();
-        } else {
+     function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+        setInputValue(e.target.value);
+        filterByInput(e.target.value);
+        if (hideUnemployedUsers) filterUnempoyedUsers();
+     };
+
+     function filterByInput(input: string) {
+        if(input.length === 0) 
+        {
             setSortedProfiles(profiles);
+            return;
         }
-    }, [hideUnemployedUsers]);
+        let newSortedPrifles = profiles.filter( profile => {
+            return profile.username.includes(input);
+        })
+        setSortedProfiles(newSortedPrifles);
+     }
 
      let profileList =  sortedProfiles.map(profile => 
         <Profile key={profile.id} profileImageUrl={profile.imageUrl}  username={profile.username} profession={profile.profession}  age={profile.age} />
@@ -77,7 +95,7 @@ export default function ProfileList() {
         <>
             <div className="profile-list">
                 <div className="profile-list__text">
-                    <input className="profile-list__search" type="text" placeholder="enter username"></input>
+                    <input className="profile-list__search" type="text" placeholder="enter username" onChange={handleInputChange}></input>
                     <input className="profile-list__checkbox" type="checkbox" onClick={handleHideClick}></input>
                     <label> Hide unemployed users</label>
                     <button className={`profile-list__text--60 profile-list__button ${activeButton === 0 ? 'profile-list__button--active' : ''} `} onClick={handleUsernameClick}>User</button>
