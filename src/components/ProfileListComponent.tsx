@@ -9,82 +9,88 @@ export default function ProfileList() {
     const [sortByAge, setSortByAge] = useState(0);
     const [sortByProffesion, setSortByProfession] = useState(0);
     const [sortByUsername, setSortByUsername] = useState(0);
-    const [activeButton, setActiveButton] = useState(-1);
     const [hideUnemployedUsers, setHideUnemployedUsers] = useState(false);
-    const [sortedProfiles, setSortedProfiles] = useState(profiles);
-    const [inputValue,setInputValue] = useState("");
+    const [inputValue, setInputValue] = useState("");
+
+    let sortedProfiles = profiles;
+    let activeButton = -1;
+
+    if (inputValue.length > 0) filterByInput(inputValue); 
+    if (hideUnemployedUsers) filterUnempoyedUsers();
+    sortProfilesByAge();
+    sortProfilesByProfession();
+    sortProfilesByUsername();
 
     function handleAgeClick() {
-        if (inputValue.length > 0) filterByInput(inputValue); 
-        if (hideUnemployedUsers) filterUnempoyedUsers();
-        if (sortByAge === 0) setSortByAge(1);
+        if (sortByAge < 2)
+        {
+            setSortByAge(sortByAge + 1);
+            setSortByProfession(0);
+            setSortByUsername(0);
+        } 
         else setSortByAge(0);
-        
-        let newSortedProfiles;
-        if (sortByAge === 1) newSortedProfiles = sortedProfiles.sort((a,b) => a.age - b.age);
-        else newSortedProfiles = sortedProfiles.sort((a,b) => b.age - a.age);
-        setActiveButton(2);
-        setSortedProfiles(newSortedProfiles);
      }
 
+     function sortProfilesByAge() {
+        if (sortByAge === 1) sortedProfiles = sortedProfiles.sort((a,b) => a.age - b.age);
+        else if (sortByAge === 2) sortedProfiles = sortedProfiles.sort((a,b) => b.age - a.age);
+
+        if (sortByAge > 0) activeButton = 2;
+      }
+
      function handleProfessionClick() {
-        if (inputValue.length > 0) filterByInput(inputValue);
-        if (hideUnemployedUsers) filterUnempoyedUsers();
-        if (sortByProffesion === 0) setSortByProfession(1);
+        if (sortByProffesion <2) 
+        {
+            setSortByAge(0);
+            setSortByProfession(sortByProffesion + 1);
+            setSortByUsername(0);
+        }
         else setSortByProfession(0);
 
-        let newSortedProfiles;
-        if (sortByProffesion === 1) newSortedProfiles = sortedProfiles.sort((a, b) => b.profession.localeCompare(a.profession));
-        else newSortedProfiles = sortedProfiles.sort((a, b) => a.profession.localeCompare(b.profession));
-        setActiveButton(1);
-        setSortedProfiles(newSortedProfiles);
+     }
+
+     function sortProfilesByProfession() {
+        if (sortByProffesion === 1) sortedProfiles = sortedProfiles.sort((a, b) => b.profession.localeCompare(a.profession));
+        else if (sortByProffesion === 2) sortedProfiles = sortedProfiles.sort((a, b) => a.profession.localeCompare(b.profession));
+
+        if (sortByProffesion > 0) activeButton = 1;
      }
 
      function handleUsernameClick() {
-        if (inputValue.length > 0) filterByInput(inputValue); 
-        if (hideUnemployedUsers) filterUnempoyedUsers();
-        if (sortByUsername === 0) setSortByUsername(1);
+        if (sortByUsername < 2)
+        {
+            setSortByAge(0);
+            setSortByProfession(0);
+            setSortByUsername(sortByUsername + 1);
+        } 
         else setSortByUsername(0);
+     }
 
-        let newSortedProfiles;
-        if (sortByUsername === 1) newSortedProfiles = sortedProfiles.sort((a,b) => b.username.localeCompare(a.username));
-        else newSortedProfiles = sortedProfiles.sort((a,b) => a.username.localeCompare(b.username));
-        setActiveButton(0);
-        setSortedProfiles(newSortedProfiles);
+     function sortProfilesByUsername() {
+        if (sortByUsername === 1) sortedProfiles = sortedProfiles.sort((a,b) => b.username.localeCompare(a.username));
+        else if (sortByUsername === 2) sortedProfiles = sortedProfiles.sort((a,b) => a.username.localeCompare(b.username));
+        
+        if (sortByUsername > 0) activeButton = 0;
      }
 
      function handleHideClick() {
-        if (!hideUnemployedUsers === true) {
-            filterUnempoyedUsers();
-        } else {
-            setSortedProfiles(profiles);
-        }
         setHideUnemployedUsers(!hideUnemployedUsers);
      }
 
      function filterUnempoyedUsers() {
-        let newSortedPrifles = sortedProfiles.filter( profile => {
+        sortedProfiles = sortedProfiles.filter( profile => {
             return profile.profession !== "Unemployed";
         })
-        setSortedProfiles(newSortedPrifles);
      }
 
      function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
         setInputValue(e.target.value);
-        filterByInput(e.target.value);
-        if (hideUnemployedUsers) filterUnempoyedUsers();
      };
 
      function filterByInput(input: string) {
-        if(input.length === 0) 
-        {
-            setSortedProfiles(profiles);
-            return;
-        }
-        let newSortedPrifles = profiles.filter( profile => {
+        sortedProfiles = profiles.filter( profile => {
             return profile.username.includes(input);
         })
-        setSortedProfiles(newSortedPrifles);
      }
 
      let profileList =  sortedProfiles.map(profile => 
